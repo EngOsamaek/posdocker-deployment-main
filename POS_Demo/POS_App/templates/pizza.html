@@ -1,0 +1,9 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+{% for pizza in pizzas %}
+    <h2>Pizza Name: {{pizza.name}}, PriceM: {{pizza.priceM}}  </h2>
+    <img class="card-img-top" src={{pizza.pImage}} alt="Card image cap">
+{% endfor %}
+{% endblock %}

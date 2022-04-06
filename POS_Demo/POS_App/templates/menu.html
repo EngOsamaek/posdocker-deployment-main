@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+<body>
+    <!-- Left Panel -->
+    {% csrf_token %}
+    <aside id="left-panel" class="left-panel">
+        <nav class="navbar navbar-expand-sm navbar-default">
+
+            <div class="navbar-header">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="./">POS System</a>
+            </div>
+
+            <div id="main-menu" class="main-menu collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="menu"> <i class="menu-icon fa fa-cutlery"></i>Menu </a>
+                    </li>
+                    <li class="active">
+                        <a href="order"> <i class="menu-icon fa fa-shopping-cart"></i>Order </a>
+                    </li>
+                    <li class="active">
+                        <a href="bill_records"> <i class="menu-icon fa fa-calendar"></i>Order History </a>
+                    </li>
+                    <!-- 
+                        Her Side List For Current Order
+                    -->
+                    <li class="active text-white">
+                        <a>Order List : </a>
+                        <ul id="pcart"></ul>
+                        <a id="ptotal">Total: 0 $</a>
+                        <button class="btn btn-success btn-lg btn-block" onclick="order()">Order </button>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+    </aside><!-- /#left-panel -->
+
+    <!-- Left Panel -->
+
+    <!-- Right Panel -->
+
+    <div id="right-panel" class="right-panel">
+
+        <!-- Header-->
+        <header id="header" class="header">
+
+            <div class="header-menu">
+
+                <div class="col-sm-7">
+                    <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
+                    <div class="header-left">
+                        <button class="search-trigger"><i class="fa fa-search"></i></button>
+                        <div class="form-inline">
+                            <form class="search-form">
+                                <input class="form-control mr-sm-2" type="text" placeholder="Search ..." aria-label="Search">
+                                <button class="search-close" type="submit"><i class="fa fa-close"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-5">
+                    <div class="user-area dropdown float-right">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="menu-icon fa fa-user"></i>
+                            Cashier Name
+                        </a>
+                    </div>
+
+                    <div class="language-select dropdown" id="language-select">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown"  id="language" aria-haspopup="true" aria-expanded="true">
+                            <i class="flag-icon flag-icon-us"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="language">
+                            <div class="dropdown-item">
+                                <span class="flag-icon flag-icon-fr"></span>
+                            </div>
+                            <div class="dropdown-item">
+                                <i class="flag-icon flag-icon-es"></i>
+                            </div>
+                            <div class="dropdown-item">
+                                <i class="flag-icon flag-icon-us"></i>
+                            </div>
+                            <div class="dropdown-item">
+                                <i class="flag-icon flag-icon-it"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </header><!-- /header -->
+        <!-- Header-->
+
+        <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="#">Dashboard</a></li>
+                            <li><a href="#">UI Elements</a></li>
+                            <li class="active">Cards</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content mt-3">
+            <div class="animated fadeIn">
+                <div class="row">
+
+
+
+
+                {% for item in items %}
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img class="card-img-top" src={{item.pImage}} alt="Card image cap">
+                            <div class="card-body">
+                                <h4 class="card-title mb-3" id="piz{{ item.id }}">{{item.name}}</h4>
+                                <p class="card-text" id="price{{ item.id }}">{{item.price}}</p>
+                                <p class="card-text" id="price{{ item.id }}">{{item.description}}</p>
+                                <div class="card-text text-sm-center">
+                                    <input class="card-title mb-3" type="number" id="qnt{{ item.id }}" name="quantity" min="1" max="100" value="1">
+                                    <button class="btn btn-primary btn-lg btn-block "  onclick="addPizza('{{ item.id }}')">Add to cart </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+
+
+
+                </div><!-- .row -->
+            </div><!-- .animated -->
+        </div><!-- .content -->
+
+
+    </div><!-- /#right-panel -->
+
+    <!-- Right Panel -->
+
+    
+    <script src="{% static "vendors/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "vendors/popper.js/dist/umd/popper.min.js" %}"></script>
+    <script src="{% static "vendors/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "assets/js/main.js" %}"></script>
+    <script src="{% static "assets/js/orders.js" %}"></script>
+
+</body> 
+
+
+{% endblock %}
+
